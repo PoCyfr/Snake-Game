@@ -1,0 +1,99 @@
+@font-face { font-family: bit; src: url('8-BIT WONDER.otf'); } 
+@font-face { font-family: bit; font-weight: bold; src: url('8-BIT WONDER.otf');}
+
+.menu{
+  position: relative;
+  width: 810px;
+  height: 840px;
+  border:0;
+  background: black;
+  margin: 0 auto;
+  
+}
+
+.snakeTitle{
+  width: 100%;
+  color:#ffffff;
+  font-size: 100px;
+  font-family: bit-wonder;
+  position:absolute;
+  top: 270px;
+  text-align: center;
+  margin: 0px;
+}
+
+.button_play{
+  width: 100%;
+  color:#ffffff;
+  font-size: 60px;
+  font-family: bit-wonder;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  outline: none;
+  position:absolute;
+  top: 500px;
+  text-align: center;
+  padding: 0px;
+ }
+
+.button_play:hover{
+  font-size: 70px;
+}
+
+.gameOverMenu{
+  position: relative;
+  width: 810px;
+  height: 840px;
+  border:0;
+  background: black;
+  display: flex;
+
+  margin: 0 auto;
+  display: none;
+}
+
+.gameOverText{
+  width: 100%;
+  color:#ffffff;
+  font-size: 80px;
+  font-family: bit-wonder;
+  align-items: center;
+  position:absolute;
+  top: 200px;
+  display: none;
+  margin left: 50%;
+  margin right: 50%;
+  text-align: center;
+}
+
+
+.button_tryagain{
+  width: 100%;
+  color:#ffffff;
+  font-size: 50px;
+  font-family: bit-wonder;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  outline: none;
+  position:absolute;
+  top: 500px;
+  text-align: center;
+    display: none;
+}
+
+.button_tryagain:hover{
+  font-size: 60px;
+}
+
+.canvas{
+ background-color: black;
+ width: 800px; 
+ height: 832px;
+ padding-left: 0;
+ padding-right: 0;
+ margin-left: auto;
+ margin-right: auto;
+ display: none;
+ border: 5px solid black;
