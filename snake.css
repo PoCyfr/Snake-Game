@@ -6,7 +6,7 @@
   width: 810px;
   height: 840px;
   border:0;
-  background: black;
+  background: #0f0f0f;
   margin: 0 auto;
   
 }
@@ -41,6 +41,58 @@
   font-size: 70px;
 }
 
+.onePlayer{
+  width: 20%;
+  height: 19%;
+  color:#ffffff;
+  background-color: transparent;
+  font-size: 60px;
+  font-family: bit-wonder;
+  display: none;
+  position:absolute;
+  top: 350px;
+  margin-left:20%;
+  border: 15px solid #ff3333;
+  border-radius: 50px;
+  text-align: center;
+
+}
+
+.onePlayer:hover{
+  top: 335px;
+  width: 25%;
+  height:24%;
+  font-size: 70px;
+  border: 30px solid #ff3333;
+  margin-left:18%;
+}
+
+.twoPlayer{
+  width: 20%;
+  height: 19%;
+  color:#ffffff;
+  background-color: transparent;
+  font-size: 60px;
+  font-family: bit-wonder;
+  display: none;
+  position:absolute;
+  top: 350px;
+  margin-right: 0px;
+  margin-left: 60%;
+  border-radius: 50px;
+  border: 15px solid #3399ff;
+}
+
+.twoPlayer:hover{
+   top: 335px;
+  width: 25%;
+  height:24%;
+  font-size: 70px;
+  border: 30px solid #3399ff;
+  margin-left:58%;
+}
+
+
 .gameOverMenu{
   position: relative;
   width: 810px;
@@ -48,9 +100,9 @@
   border:0;
   background: black;
   display: flex;
-
   margin: 0 auto;
   display: none;
+  background: #0f0f0f;
 }
 
 .gameOverText{
@@ -67,6 +119,29 @@
   text-align: center;
 }
 
+.gameOverPoints1{
+  color:#ff8e8e;
+  position:absolute;
+  top: 380px;
+  width: 50%;
+  font-size: 30px;
+  font-family: bit-wonder;
+  display: none;
+  text-align: center;
+  margin-left: 10%;
+}
+
+.gameOverPoints2{
+  color:#7275ff;
+  position:absolute;
+  top: 380px;
+  width: 50%;
+  font-size: 30px;
+  font-family: bit-wonder;
+  display: none;
+  text-align: right;
+  margin-left: 33%;
+}
 
 .button_tryagain{
   width: 100%;
@@ -80,7 +155,7 @@
   position:absolute;
   top: 500px;
   text-align: center;
-    display: none;
+  display: none;
 }
 
 .button_tryagain:hover{
@@ -88,7 +163,7 @@
 }
 
 .canvas{
- background-color: black;
+ background-color: #0f0f0f;
  width: 800px; 
  height: 832px;
  padding-left: 0;
