@@ -11,7 +11,7 @@ const gameOverPoints1 = document.querySelector(".gameOverPoints1")
 const gameOverPoints2 = document.querySelector(".gameOverPoints2")
 const buttonTryAgain = document.querySelector(".button_tryagain");
 const box = 32;
-const snakeSpeed = 100;
+const frameInterval = 130;
 
 
 startButton.addEventListener("click", function(){
@@ -268,7 +268,7 @@ function game(twoPlayers){
 				y:Math.floor(Math.random()*25+1)*box
 	};
 
-	var refreshInterval = setInterval(function(){draw(snake1, snake2, food, refreshInterval, twoPlayers)}, snakeSpeed);
+	var refreshInterval = setInterval(function(){draw(snake1, snake2, food, refreshInterval, twoPlayers)}, frameInterval);
 	updatePendingDirection(snake1, 37, 38, 39, 40);//controled using arrow keys
 	if(twoPlayers) updatePendingDirection(snake2, 65, 87, 68, 83);//controled using wasd keys
 }
