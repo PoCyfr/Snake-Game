@@ -267,7 +267,7 @@ function game(twoPlayers){
 				y:Math.floor(Math.random()*25+1)*box
 	};
 
-	var refreshInterval = setInterval(function(){draw(snake1, snake2, food, refreshInterval, twoPlayers)}, 1000);
+	var refreshInterval = setInterval(function(){draw(snake1, snake2, food, refreshInterval, twoPlayers)}, 100);
 	updatePendingDirection(snake1, 37, 38, 39, 40);//controled using arrow keys
 	if(twoPlayers) updatePendingDirection(snake2, 65, 87, 68, 83);//controled using wasd keys
 }
