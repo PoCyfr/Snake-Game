@@ -48,37 +48,62 @@ function Snake(x, y, direction){
 
 //MOVES SNAKE
 function moveSnake(snake, foodEaten){
-	if(snake.pendingDir[0]==="LEFT"){
-		snake.snakePos.unshift({x:snake.snakePos[0].x - box, y:snake.snakePos[0].y});
-		if(!foodEaten) snake.snakePos.pop();
-		snake.dir="LEFT";
-
-	} else if(snake.pendingDir[0]==="UP"){
-		snake.snakePos.unshift({x:snake.snakePos[0].x, y:snake.snakePos[0].y - box});
-		if(!foodEaten) snake.snakePos.pop();
-		snake.dir="UP";
-
-	} else if(snake.pendingDir[0]==="RIGHT"){
-		snake.snakePos.unshift({x:snake.snakePos[0].x + box, y:snake.snakePos[0].y});
-		if(!foodEaten) snake.snakePos.pop();;
-		snake.dir="RIGHT";
-
-	} else if(snake.pendingDir[0]==="DOWN"){
-		snake.snakePos.unshift({x:snake.snakePos[0].x, y:snake.snakePos[0].y + box});
-		if(!foodEaten) snake.snakePos.pop();
-		snake.dir="DOWN";
-	}
-	//Checks if there are pending directions
-	if(snake.pendingDir[1] != undefined){
-		snake.pendingDir.shift();
+	if(snake.pendingDir[0]===undefined){
+		//Move in the direction already in the snake
+		if(snake.dir==="LEFT"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x - box, y:snake.snakePos[0].y});
+			if(!foodEaten) snake.snakePos.pop();
+	
+		} else if(snake.dir==="UP"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x, y:snake.snakePos[0].y - box});
+			if(!foodEaten) snake.snakePos.pop();
+	
+		} else if(snake.dir==="RIGHT"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x + box, y:snake.snakePos[0].y});
+			if(!foodEaten) snake.snakePos.pop();
+	
+		} else if(snake.dir==="DOWN"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x, y:snake.snakePos[0].y + box});
+			if(!foodEaten) snake.snakePos.pop();
+		} 
+	} else {
+		//Changes snake direction
+		turnSnake(snake, foodEaten);
 	}
 }
 
+function turnSnake(snake, foodEaten){
+	if(snake.pendingDir[0]==="LEFT"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x - box, y:snake.snakePos[0].y});
+			snake.pendingDir.shift();
+			if(!foodEaten) snake.snakePos.pop();
+			snake.dir="LEFT";
+	
+		} else if(snake.pendingDir[0]==="UP"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x, y:snake.snakePos[0].y - box});
+			snake.pendingDir.shift();
+			if(!foodEaten) snake.snakePos.pop();
+			snake.dir="UP";
+	
+		} else if(snake.pendingDir[0]==="RIGHT"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x + box, y:snake.snakePos[0].y});
+			snake.pendingDir.shift();
+			if(!foodEaten) snake.snakePos.pop();
+			snake.dir="RIGHT";
+	
+		} else if(snake.pendingDir[0]==="DOWN"){
+			snake.snakePos.unshift({x:snake.snakePos[0].x, y:snake.snakePos[0].y + box});
+			snake.pendingDir.shift();
+			if(!foodEaten) snake.snakePos.pop();
+			snake.dir="DOWN";
+		} 
+}
 
 //ADD A NEW DIRECTION TO THE PENDING DIRECTIONS OF A SNAKE
 function updatePendingDirection(snake, left, up, right, down){
 	document.addEventListener("keydown", function(e){
-			var last = snake.pendingDir[snake.pendingDir.length-1];
+		if(snake.pendingDir.length<2){
+			var last = snake.pendingDir[0]===undefined? snake.dir : snake.pendingDir[snake.pendingDir.length-1];
 			if(e.which===left && (last != "RIGHT")){
 				snake.pendingDir.push("LEFT");
 			} else if(e.which===up && (last != "DOWN")){
@@ -88,7 +113,8 @@ function updatePendingDirection(snake, left, up, right, down){
 			} else if(e.which===down && (last != "UP")){
 				snake.pendingDir.push("DOWN");
 			}
-		
+		}
+
 	})
 }
 
@@ -216,9 +242,10 @@ function gameOver(snake1, snake2, refreshInterval, twoPlayers){
 		console.log(1);
 		//remove eventListener so it doesnt stack listeners
 		buttonTryAgain.removeEventListener('click', restart);
+		ctx.clearRect(0, 0, cvs.width, cvs.height);//clear canvas
+		game(twoPlayers);
 		cvs.style.display= "block";
 		gameOverMenu.style.display = "none";
-		game(twoPlayers);
 	}
 }
 
@@ -240,7 +267,7 @@ function game(twoPlayers){
 				y:Math.floor(Math.random()*25+1)*box
 	};
 
-	var refreshInterval = setInterval(function(){draw(snake1, snake2, food, refreshInterval, twoPlayers)}, 100);
+	var refreshInterval = setInterval(function(){draw(snake1, snake2, food, refreshInterval, twoPlayers)}, 1000);
 	updatePendingDirection(snake1, 37, 38, 39, 40);//controled using arrow keys
 	if(twoPlayers) updatePendingDirection(snake2, 65, 87, 68, 83);//controled using wasd keys
 }
