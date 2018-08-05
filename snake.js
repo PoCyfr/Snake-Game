@@ -43,6 +43,8 @@ function Snake(x, y, direction){
 	this.pendingDir=[];
 	this.pendingDir[0]=direction
 	this.points=0;
+	this.headFillId;
+	this.tailFillId;
 }
 
 
@@ -174,10 +176,76 @@ function checkSnakesCollision(snake1, snake2){
 	}
 	return false;
 }
+var c;
+function fillBox(x, y, direction, color){
+	if(direction==="LEFT"){
+		var boxX = x+box;
+		var boxY = y;
+		interval = setInterval(function(){
+				c++;
+			ctx.fillStyle = color;
+			ctx.fillRect(boxX, boxY, 2, box);
+			boxX-=2;
+			if(boxX===x) clearInterval(interval);
+		}, frameInterval/(box/2));
+		return interval;
+	} else if(direction==="UP"){
+		var boxX = x;
+		var boxY = y+box;
+		interval = setInterval(function(){
+			c++;
+			ctx.fillStyle = color;
+			ctx.fillRect(boxX, boxY, box, 2);
+			boxY-=2;
+			if(boxY===y) clearInterval(interval);
+		}, frameInterval/(box/2));
+		return interval;
+	} else if(direction==="RIGHT"){
+		var boxX = x;
+		var boxY = y;
+		interval = setInterval(function(){
+			c++;
+			ctx.fillStyle = color;
+			ctx.fillRect(boxX, boxY, 2, box);
+			boxX+=2;
+			if(boxX===x+box) clearInterval(interval);
+		}, frameInterval/(box/2));
+		return interval;
+	} else if(direction==="DOWN"){
+		var boxX = x;
+		var boxY = y;
+		interval = setInterval(function(){
+			c++;
+			ctx.fillStyle = color;
+			ctx.fillRect(boxX, boxY, box, 2);
+			boxY+=2;
+			if(boxY===y+box) clearInterval(interval);
+		}, frameInterval/(box/2));
+		return interval;
+	}
+}
+
+function removeTail(snake){
+	var tail = snake.snakePos[snake.snakePos.length-1];
+	var beforeTail = snake.snakePos[snake.snakePos.length-2];
+	if(tail.x > beforeTail.x){
+		return fillBox(tail.x, tail.y, "LEFT", "#0f0f0f");
+	} else if(tail.x < beforeTail.x){
+		return fillBox(tail.x, tail.y, "RIGHT", "#0f0f0f");
+	} else if(tail.y > beforeTail.y){
+		return fillBox(tail.x, tail.y, "UP", "#0f0f0f");
+	} else if(tail.y < beforeTail.y){
+		return fillBox(tail.x, tail.y, "DOWN", "#0f0f0f");
+	}
+}
 
 //DRAWS SNAKE FOOD POINTS
 function draw(snake1, snake2, food, refreshInterval, twoPlayers){
+	console.log(c);
+	c=0;
 	ctx.clearRect(0, 0, cvs.width, cvs.height);//clear canvas
+	clearInterval(snake1.headFillId);
+	clearInterval(snake1.tailFillId);
 	//in game points text
 	ctx.font="18px bit-wonder";
 	ctx.fillStyle= "#ff8e8e";
@@ -209,17 +277,24 @@ function draw(snake1, snake2, food, refreshInterval, twoPlayers){
 			gameOver(snake1, snake2, refreshInterval, twoPlayers);
 		}
 	}
-	//Draws snake
-	for(var i=0; i<snake1.snakePos.length; i++){
-		ctx.fillStyle = i===0? "#ff0000" : "#ffffff";
-		ctx.fillRect(snake1.snakePos[i].x+2, snake1.snakePos[i].y+2, box-4,box-4);
+
+	//Draws snake head
+	snake1.headFillId = fillBox(snake1.snakePos[0].x, snake1.snakePos[0].y, snake1.dir, "#ffffff");
+	//Removes tail
+	snake1.tailFillId = removeTail(snake1);
+	//Draws snake body
+	for(var i=1; i<snake1.snakePos.length; i++){
+		ctx.fillStyle =  "#ffffff";
+		ctx.fillRect(snake1.snakePos[i].x, snake1.snakePos[i].y, box,box);
 	}
 	if(twoPlayers){
 		for(var i=0; i<snake2.snakePos.length; i++){
 			ctx.fillStyle = i===0? "#0000ff" : "#ffffff";
 			ctx.fillRect(snake2.snakePos[i].x+2, snake2.snakePos[i].y+2, box-4,box-4);
+		}
 	}
-	}
+
+
 }
 
 //GAMEOVER
@@ -256,6 +331,7 @@ function game(twoPlayers){
 	var snake1 = new Snake(5*box, 10*box, "RIGHT");
 	snake1.snakePos[1]={x:4*box, y:10*box};
 	snake1.snakePos[2]={x:3*box, y:10*box};
+	snake1.snakePos[3]={x:2*box, y:10*box};
 	
 	//Creates second snake
 	if(twoPlayers){
